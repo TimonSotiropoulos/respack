@@ -1,0 +1,3 @@
+# .gitignore - the files to not push to GitHub
+node_modules/
+lib/
