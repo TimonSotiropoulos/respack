@@ -134,14 +134,4 @@ const respack = {
     FAILED: sendFailed
 };
 export default respack;
-
-
-/**
-* @function test
-* Tests that all the application is working as expected
-* @returns none
-*/
-export const test = () => {
-    console.log("Test Successfull!");
-}
 // --------------------------------
