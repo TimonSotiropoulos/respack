@@ -154,7 +154,7 @@ const respack = {
     },
     GET: GET,
     POST: POST,
-    ASYN: safeAsync,
+    ASYNC: safeAsync,
     OKAY: sendOkay,
     ERROR: sendError,
     FAILED: sendFailed
