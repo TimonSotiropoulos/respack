@@ -77,6 +77,31 @@ const handleError = (err) => {
 
 }
 
+const safeAsync = async (promise, req, res) => {
+    return promise
+    .then((result) => {
+        switch(result.status) {
+            case OKAY:
+                return result.body;
+            case FAILED:
+                sendFailed(res, result.body);
+                return null;
+            case ERROR:
+                sendError(res, result.body);
+                return null;
+            default:
+                console.warn("We fell through all the RESPACK checks.");
+                console.warn("Something is DANGEROUSLY wrong!!!!");
+                return null;
+        }
+    })
+    .catch((err) => {
+        sendError(res, err.message);
+        return null;
+    });
+};
+
+
 /**
  * @function getRequestParams
  * Generates a standard get request parameters for a fetch request
@@ -129,6 +154,7 @@ const respack = {
     },
     GET: GET,
     POST: POST,
+    ASYN: safeAsync,
     OKAY: sendOkay,
     ERROR: sendError,
     FAILED: sendFailed
