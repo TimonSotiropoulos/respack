@@ -51,6 +51,18 @@ const sendError = (body) => {
     };
 };
 
+const sendOkayRes = (res, body = {}, status = 200) => {
+    return res.status(status).json(sendOkay(body));
+};
+
+const sendFailedRes = (res, body = {}, status = 400) => {
+    return res.status(status).json(sendFailed(body));
+};
+
+const sendErrorRes = (res, body = {}, status = 400) => {
+    return res.status(status).json(sendError(body));
+};
+
 const handleResponse = (res) => {
     switch(res.data.status) {
         case OKAY:
@@ -84,10 +96,10 @@ const safeAsync = async (promise, req, res) => {
             case OKAY:
                 return result.body;
             case FAILED:
-                sendFailed(res, result.body);
+                sendFailedRes(res, result.body);
                 return null;
             case ERROR:
-                sendError(res, result.body);
+                sendErrorRes(res, result.body);
                 return null;
             default:
                 console.warn("We fell through all the RESPACK checks.");
