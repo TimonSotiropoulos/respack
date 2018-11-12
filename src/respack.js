@@ -18,14 +18,14 @@ const OKAY = 'OKAY';
 const FAILED = 'FAILED';
 const ERROR = 'ERROR';
 
-const GET = (url) => {
-    return axios(url, getRequestParams())
+const GET = (url, headers) => {
+    return axios(url, getRequestParams(headers))
     .then(handleResponse)
     .catch(handleError);
 }
 
-const POST = (url, body) => {
-    return axios(url, postRequestParams(body))
+const POST = (url, body, headers) => {
+    return axios(url, postRequestParams(body, headers))
     .then(handleResponse)
     .catch(handleError);
 }
@@ -117,14 +117,13 @@ const safeAsync = async (promise, req, res) => {
 /**
  * @function getRequestParams
  * Generates a standard get request parameters for a fetch request
+ * @params {object} headers - Key Value pairs of request headers
  * @returns {object} params - Basic params for a get request using fetch
  */
-export const getRequestParams = () => {
+export const getRequestParams = (headers = {"Content-Type": "application/json"}) => {
     const params = {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: headers,
         withCredentials: true,
         data: undefined
     }
@@ -135,14 +134,13 @@ export const getRequestParams = () => {
  * @function postRequestParams
  * Generates a standard post request parameters for a fetch request
  * @params {object} body - JSON object to be passed onto the fetch API
+ * @params {object} headers - Key Value pairs of request headers
  * @returns {object} params - Basic params for a post request using fetch
  */
-export const postRequestParams = (body) => {
+export const postRequestParams = (body, headers = {"Content-Type": "application/json"}) => {
     const params = {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: headers,
         withCredentials: true,
         data: body
     }
