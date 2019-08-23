@@ -108,7 +108,9 @@ const safeAsync = async (promise, req, res) => {
         }
     })
     .catch((err) => {
-        sendError(res, err.message);
+        console.log('ERROR: MAKING API REQUEST');
+        console.log(err);
+        sendErrorRes(res, err.message);
         return null;
     });
 };
